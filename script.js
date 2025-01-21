@@ -8,6 +8,7 @@ const userFirstNameInput = document.getElementById('userFirstName');
 const userLastNameInput = document.getElementById('userLastName');
 const userEmailInput = document.getElementById('userEmail');
 const userDepartmentInput = document.getElementById('userDepartment');
+const errorMessageContainer = document.getElementById('errorMessage');
 
 document.addEventListener('DOMContentLoaded', loadUsers);
 
@@ -99,4 +100,14 @@ function deleteUser(userId) {
         .then(() => {
             loadUsers();
         });
+}
+function handleApiResponse(response) {
+    if (!response.ok) {
+        throw new Error(`API request failed with status: ${response.status}`);
+    }
+    return response.json();
+}
+function handleError(error) {
+    errorMessageContainer.classList.remove('hidden');
+    errorMessageContainer.textContent = `Error: ${error.message}`;
 }
